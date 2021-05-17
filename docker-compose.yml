@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+  #Debian builder image
+  cs50-build-cont:
+    build:
+      context: ./docker-build
+      dockerfile: Dockerfile
+    image: cs50-img:build-env
+    container_name: cs50-build-container
+    restart: unless-stopped
+    tty: true
+    environment:
+      NAME: cs50-build-env
+    working_dir: /home/user/cs50
+    volumes:
+      - .:/home/user/cs50
+    networks:
+      - cs50-net
+  
+networks:
+  cs50-net:
+    driver: bridge
+
+volumes:
+  cs50-data:
+    driver: local
+
